@@ -18,12 +18,6 @@ const UserSchema = new Schema(
         "Please fill a valid email address",
       ],
     },
-    // createdAt: {
-    //   type: Date,
-    //   default: Date.now,
-    //   get: (createdAtVal) => dateFormat(createdAtVal),
-    // },
-
     thoughts: [
       {
         type: Schema.Types.ObjectId,
@@ -41,7 +35,6 @@ const UserSchema = new Schema(
   {
     toJSON: {
       virtuals: true,
-    //   getters: true,  ///????
     },
     // prevents virtuals from creating duplicate of _id as `id`
     id: false,
@@ -50,10 +43,8 @@ const UserSchema = new Schema(
 
 // Create a virtual called friendCount that retrieves the length of the user's friends array field on query.
 UserSchema.virtual("friendCount").get(function () {
-//   return this.comments.reduce(
-//     (total, comment) => total + comment.replies.length + 1,
-//     0
-//   );
+  return this.friends.length
+
 });
 
 const User = model("User", UserSchema);

@@ -78,15 +78,13 @@ const thoughtController = {
 
   // add reaction to thought
   addReaction({ params, body }, res) {
-    console.log(params);
-    Thought.create(body)
-      .then(({ _id }) => {
-        return Thought.findOneAndUpdate(
-          { _id: params.thoughtId },
-          { $push: { thought: _id } },
-          { new: true }
-        );
-      })
+    console.log(body);
+    Thought.findOneAndUpdate(
+      { _id: params.thoughtId },
+      { $push: { reaction:  body }},
+      
+      { new: true }
+    )
       .then((dbThoughtsData) => {
         console.log(dbThoughtsData);
         if (!dbThoughtsData) {
