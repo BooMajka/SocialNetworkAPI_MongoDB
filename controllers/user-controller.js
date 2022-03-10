@@ -29,8 +29,8 @@ const userController = {
 
   // get one user by id
   getUserById({ params }, res) {
-          console.log("----------------------------------");
-      console.log(params.userId);
+    console.log("----------------------------------");
+    console.log(params.userId);
     User.findOne({ _id: params.userId })
       .populate({
         path: "users",
@@ -45,10 +45,10 @@ const userController = {
   },
 
   // create User
-//   {
-//     "username": "lernantino",
-//     "email": "lernantino@gmail.com"
-//   }
+  // {
+  //   "username": "lernantino",
+  //   "email": "lernantino@gmail.com"
+  // }
   createUser({ body }, res) {
     User.create(body)
       .then((dbUsersData) => res.json(dbUsersData))
@@ -122,7 +122,35 @@ const userController = {
   removeFriend({ params }, res) {
     User.findOneAndUpdate(
       { _id: params.userId },
-      { $pull: { friends:  params.friendId  }  },
+      { $pull: { friends: params.friendId } },
+      { new: true }
+    )
+      .then((dbUserData) => res.json(dbUserData))
+      .catch((err) => res.json(err));
+  },
+
+  // add thought to user
+  addThought({ params, body }, res) {
+    User.findOneAndUpdate(
+      { _id: params.userId },
+      { $push: { thoughts: params.thoughtId } },
+      { new: true, runValidators: true }
+    )
+      .then((dbUserData) => {
+        if (!dbUserData) {
+          res.status(404).json({ message: "No user found with this id!" });
+          return;
+        }
+        res.json(dbUserData);
+      })
+      .catch((err) => res.json(err));
+  },
+
+  // remove thought
+  deleteThought({ params }, res) {
+    User.findOneAndUpdate(
+      { _id: params.userId },
+      { $pull: { thoughts: params.thoughtId } },
       { new: true }
     )
       .then((dbUserData) => res.json(dbUserData))

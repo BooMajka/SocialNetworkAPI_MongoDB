@@ -5,6 +5,7 @@ const {
   createUser,
   updateUser,
   deleteUser,
+  addThought,
   deleteThought,
   addFriend,
   removeFriend,
@@ -24,9 +25,9 @@ router
 .delete(deleteUser);
 
 // Remove a user's associated thoughts when deleted.
-router
-.route("/:userId/:thoughtId")
-.delete(deleteThought); //??
+router.route("/:userId/:thoughtId")
+.post(addThought)
+.delete(deleteThought);
 
 
 router
