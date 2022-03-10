@@ -42,8 +42,8 @@ const thoughtController = {
   },
 
   // create thought
-  // user 622946acf635e7d8c3c9eda2
-  // tho 622944f2f635e7d8c3c9ed89
+  // user 62294d310a3bf0f5442f7979
+  // tho 62294e190a3bf0f5442f798b
   //
   //   {
   //   "thoughtText": "Here's a cool thought...",
